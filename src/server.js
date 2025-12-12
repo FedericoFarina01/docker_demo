@@ -55,7 +55,7 @@ app.get('/team-leaders', async (req, res) => {
 // Ruta para insertar Trainees
 app.post('/trainee', async (req, res) => {
   try {
-    const result = await pool.query("INSERT INTO empleados (nombre, edad, id_departamento, id_roles) VALUES ('Pepe', 20, 5, 6)");
+    const result = await pool.query("INSERT INTO empleados (nombre, edad, id_departamento, id_roles) VALUES ('Pepe', 20, 5, 6) RETURNING *") ;
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -66,12 +66,35 @@ app.post('/trainee', async (req, res) => {
 
 // Ruta para cambiar un empleado de departamento
 app.put('/rol-change', async (req, res) => {
+
   try {
     const result = await pool.query("UPDATE empleados SET id_departamento = 1 WHERE nombre = 'Valentina' RETURNING *");
     res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Error al actualizar empleado' });
+  }
+});
+
+
+app.get('/cant-empleados', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT COUNT(*) AS cant_empleados FROM empleados WHERE id_departamento = 1');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al consultar empleados del departamento' });
+  }
+});
+
+
+app.get('/cant-empleados-2', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT COUNT(*) AS cant_empleados FROM empleados WHERE id_departamento = 2');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Error al consultar empleados del departamento 2' });
   }
 });
 
