@@ -11,7 +11,7 @@ const pool = new Pool({
 
 export async function testConnection() {
   try {
-    const result = await pool.query('SELECT 1');
+    await pool.query('SELECT 1');
     console.log('DB connection OK');
     return true;
   } catch (err) {

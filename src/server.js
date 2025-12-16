@@ -1,6 +1,6 @@
 import express from 'express';
 import router from './routes.js';
-import { testConnection } from './db.js';
+import { testConnection } from './repositories/db.js';
 
 const app = express();
 app.use(express.json());
