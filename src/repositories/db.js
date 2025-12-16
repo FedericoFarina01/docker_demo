@@ -1,12 +1,13 @@
+import 'dotenv/config';
 import pkg from 'pg';
 const { Pool } = pkg;
 
 const pool = new Pool({
-  host: 'postgres',
-  port: 5432,
-  user: 'root',
-  password: 'admin',
-  database: 'pruebaDB'
+  host: process.env.DB_HOST || 'postgres',
+  port: Number(process.env.DB_PORT || 5432),
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'admin',
+  database: process.env.DB_NAME || 'pruebaDB'
 });
 
 export async function testConnection() {
